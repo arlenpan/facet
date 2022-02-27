@@ -1,7 +1,7 @@
 import FacetSlot from "components/FacetSlot";
 import { FACET_STATE_FAILURE, FACET_STATE_SUCCESS } from "lib/consts";
 
-export default function FacetRow({ slots = Array(6).fill(null), onFacet }) {
+export default function FacetRow({ slots = Array(6).fill(null), type, onFacet }) {
     const handleClickFacet = (e) => {
         const value = e.target.value;
         onFacet(value);
@@ -14,7 +14,7 @@ export default function FacetRow({ slots = Array(6).fill(null), onFacet }) {
                 <div>Title</div>
                 <div className="d-flex-center">
                     {slots.map((s, i) => (
-                        <FacetSlot value={s} key={i} />
+                        <FacetSlot value={s} type={type} key={i} />
                     ))}
                 </div>
             </div>

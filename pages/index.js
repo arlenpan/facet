@@ -4,6 +4,7 @@ import {
     ENGRAVING_TYPE_POSITIVE,
     FACET_STATE_FAILURE,
     FACET_STATE_SUCCESS,
+    NUM_ENGRAVING_POSITIVE,
     NUM_SLOTS_DEFAULT,
     NUM_SLOTS_MAX,
     NUM_SLOTS_MIN,
@@ -97,16 +98,18 @@ export default function Home() {
             {positiveSlots.map((row, i) => (
                 <FacetRow
                     slots={row.slots}
+                    type={row.type}
                     key={i}
-                    onFacet={(value) => handleFacet(value, i, ENGRAVING_TYPE_POSITIVE)}
+                    onFacet={(value) => handleFacet(value, i, row.type)}
                 />
             ))}
             Chance of Cracking: {currentOdds}
             {negativeSlots.map((row, i) => (
                 <FacetRow
                     slots={row.slots}
+                    type={row.type}
                     key={i}
-                    onFacet={(value) => handleFacet(value, i, ENGRAVING_TYPE_NEGATIVE)}
+                    onFacet={(value) => handleFacet(value, i + NUM_ENGRAVING_POSITIVE, row.type)}
                 />
             ))}
         </main>
