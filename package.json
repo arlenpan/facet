@@ -9,15 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "classnames": "^2.3.1",
     "next": "12.1.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "sass": "^1.49.9"
   },
   "devDependencies": {
     "eslint": "8.10.0",
     "eslint-config-next": "12.1.0"
   },
   "prettier": {
-    "tabWidth": 4
+    "tabWidth": 4,
+    "printWidth": 100
   }
 }

@@ -1,0 +1,15 @@
+.facet-slot {
+    border: 1px solid red;
+    width: 40px;
+    height: 30px;
+
+    &.success path {
+        stroke: 1px solid blue;
+        fill: blue;
+    }
+
+    &.failure path {
+        stroke: 1px solid gray;
+        fill: gray;
+    }
+}
