@@ -133,7 +133,7 @@ export default function Home() {
                 max={NUM_SLOTS_MAX}
                 min={NUM_SLOTS_MIN}
             />
-            Success Rate: {currentOdds}
+            Success Rate: {currentOdds}%
             {positiveSlots.map((row, i) => (
                 <FacetRow
                     slots={row.slots}
@@ -144,7 +144,7 @@ export default function Home() {
                     onUndo={() => handleUndoRow(i)}
                 />
             ))}
-            Chance of Cracking: {currentOdds}
+            Chance of Cracking: {currentOdds}%
             {negativeSlots.map((row, i) => (
                 <FacetRow
                     slots={row.slots}
