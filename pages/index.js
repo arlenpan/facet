@@ -21,6 +21,7 @@ export default function Home() {
     const [numSlots, setNumSlots] = useState(NUM_SLOTS_DEFAULT);
     const [slots, setSlots] = useState(initializeDefaultSlots());
     const [currentOdds, setCurrentOdds] = useState(ODDS_DEFAULT);
+    const [entryLog, setEntryLog] = useState([]); // log all moves
 
     const handleChangeNumSlots = (e) => {
         const value = parseInt(e.target.value, 10);
@@ -81,6 +82,44 @@ export default function Home() {
         return null;
     };
 
+    const removeRowFacet = (row) => {
+        const newRow = [...row];
+        const index = newRow.indexOf(null);
+        let value = null;
+        if (index === -1) {
+            value = newRow[newRow.length - 1];
+            newRow[newRow.length - 1] = null;
+        }
+        if (index > 0) {
+            value = newRow[index - 1];
+            newRow[index - 1] = null;
+        }
+        return {
+            row: newRow,
+            removedValue: value /* removedValue is null if nothing was removed */,
+        };
+    };
+
+    const handleResetRow = (rowIndex) => {
+        const newSlots = deepCopySlots(slots);
+        newSlots[rowIndex].slots = new Array(numSlots).fill(null);
+        setSlots(newSlots);
+    };
+
+    const handleResetAll = () => {
+        setSlots(initializeDefaultSlots(numSlots));
+        setCurrentOdds(ODDS_DEFAULT);
+    };
+
+    const handleUndoRow = (rowIndex) => {
+        const newSlots = deepCopySlots(slots);
+        const { row, removedValue } = removeRowFacet(newSlots[rowIndex].slots);
+        if (removedValue !== null) { // we actually removed something
+            newSlots[rowIndex].slots = row;
+            setSlots(newSlots);
+        }
+    };
+
     const positiveSlots = slots.filter((s) => s.type === ENGRAVING_TYPE_POSITIVE);
     const negativeSlots = slots.filter((s) => s.type === ENGRAVING_TYPE_NEGATIVE);
 
@@ -101,6 +140,8 @@ export default function Home() {
                     type={row.type}
                     key={i}
                     onFacet={(value) => handleFacet(value, i, row.type)}
+                    onReset={() => handleResetRow(i)}
+                    onUndo={() => handleUndoRow(i)}
                 />
             ))}
             Chance of Cracking: {currentOdds}
@@ -110,8 +151,13 @@ export default function Home() {
                     type={row.type}
                     key={i}
                     onFacet={(value) => handleFacet(value, i + NUM_ENGRAVING_POSITIVE, row.type)}
+                    onReset={() => handleResetRow(i + NUM_ENGRAVING_POSITIVE)}
+                    onUndo={() => handleUndoRow(i + NUM_ENGRAVING_POSITIVE)}
                 />
             ))}
+            <button type="button" onClick={handleResetAll}>
+                Reset All
+            </button>
         </main>
     );
 }

@@ -1,7 +1,7 @@
 import FacetSlot from "components/FacetSlot";
 import { FACET_STATE_FAILURE, FACET_STATE_SUCCESS } from "lib/consts";
 
-export default function FacetRow({ slots = Array(6).fill(null), type, onFacet }) {
+export default function FacetRow({ slots = Array(6).fill(null), type, onFacet, onReset, onUndo }) {
     const handleClickFacet = (e) => {
         const value = e.target.value;
         onFacet(value);
@@ -26,7 +26,13 @@ export default function FacetRow({ slots = Array(6).fill(null), type, onFacet })
                     Fail
                 </button>
                 <button type="button" value="random" onClick={handleClickFacet}>
-                    Random
+                    Try
+                </button>
+                <button type="button" onClick={onUndo}>
+                    Undo
+                </button>
+                <button type="button" onClick={onReset}>
+                    Reset
                 </button>
             </div>
         </div>
